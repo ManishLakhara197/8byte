@@ -7,7 +7,7 @@ app.get("/health", (_, res) => {
 });
 
 app.get("/", (_, res) => {
-  res.json({ message: "Hello from the sample app - test #2" });
+  res.json({ message: "Hello from the sample app - test #3" });
 });
 
 app.listen(PORT, () => {
