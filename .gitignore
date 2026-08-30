@@ -1,0 +1,5 @@
+*.tfvars
+*.env
+infra\.terraform
+infra\.terraform.lock.hcl
+*node_modules*
