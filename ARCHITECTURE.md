@@ -45,7 +45,7 @@ The repository is organized as follows:
 │       └── loadbalancer/
 ├── .github/workflows/
 │   ├── pr-checks.yml
-│   └── build-and-deploy-staging.yml
+│   └── build-and-deploy-production.yml
 ├── monitoring/
 │   ├── dashboards/
 │   └── alerts/

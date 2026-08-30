@@ -7,7 +7,7 @@ variable "region" {
 variable "environment" {
   description = "Deployment environment name"
   type        = string
-  default     = "staging"
+  default     = "production"
 }
 
 variable "project_name" {

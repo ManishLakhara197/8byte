@@ -39,7 +39,7 @@ Before writing code:
 │       └── loadbalancer/
 ├── .github/workflows/
 │   ├── pr-checks.yml
-│   └── build-and-deploy-staging.yml
+│   └── build-and-deploy-production.yml
 ├── monitoring/
 │   ├── dashboards/
 │   └── alerts/
@@ -71,9 +71,9 @@ Before writing code:
 
 - [ ] `pr-checks.yml`: triggered on PR — run unit + integration tests, lint, `terraform
 validate`/`plan` on infra changes
-- [ ] `build-and-deploy-staging.yml`: triggered on merge to `main` — build Docker image,
+- [ ] `build-and-deploy-production.yml`: triggered on merge to `main` — build Docker image,
       scan image (Trivy or `docker scout`) and dependencies (`npm audit`/`pip-audit`/
-      `snyk`, whichever fits the app), push to ECR, deploy to staging (ECS service update
+      `snyk`, whichever fits the app), push to ECR, deploy to production (ECS service update
       or equivalent)
 - [ ] Failure notifications to Slack (webhook) and/or email on any job failure
 - [ ] Store all credentials as GitHub Actions secrets — never hardcode
@@ -115,7 +115,7 @@ validate`/`plan` on infra changes
   manager — grep the repo for hardcoded keys before finishing
 - CI pipeline YAML is syntactically valid and each job's purpose is documented with
   comments
-- README is sufficient for a new engineer to stand up staging from scratch
+- README is sufficient for a new engineer to stand up the production environment from scratch
 - Every checkbox above is either implemented or explicitly noted as out-of-scope with a
   reason in ARCHITECTURE.md
 
