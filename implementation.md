@@ -495,13 +495,37 @@ The repo already includes:
 2. Verify ECS metrics are visible in CloudWatch
 3. Verify ALB and RDS metrics are collected
 4. Check log groups under `/ecs/...`
+5. Create the CloudWatch dashboards defined in `monitoring/dashboards/`
 
 Useful checks:
 
 ```bash
 aws logs describe-log-groups --region us-east-1
 aws cloudwatch describe-alarms --region us-east-1
+aws cloudwatch list-dashboards --region us-east-1
 ```
+
+### Create the CloudWatch dashboards
+
+Create the infrastructure overview dashboard:
+
+```bash
+aws cloudwatch put-dashboard \
+  --region us-east-1 \
+  --dashboard-name eightbytes-infra-overview \
+  --dashboard-body file://monitoring/dashboards/infra-overview.json
+```
+
+Create the database performance dashboard:
+
+```bash
+aws cloudwatch put-dashboard \
+  --region us-east-1 \
+  --dashboard-name eightbytes-db-performance \
+  --dashboard-body file://monitoring/dashboards/db-performance.json
+```
+
+> Replace the placeholder resource names in the dashboard JSON with your actual ECS cluster, ALB, and RDS instance names before creating the dashboards in AWS.
 
 ---
 
