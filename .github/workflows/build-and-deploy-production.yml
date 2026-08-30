@@ -1,4 +1,4 @@
-name: Build and Deploy Staging
+name: Build and Deploy production
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - name: Check out source
         uses: actions/checkout@v4
