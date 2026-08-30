@@ -1,5 +1,10 @@
+# Ignore environment and variable files anywhere
 *.tfvars
 *.env
-infra\.terraform
-infra\.terraform.lock.hcl
-*node_modules*
+
+# Ignore specific infrastructure folders
+infra/.terraform/
+infra/.terraform.lock.hcl
+
+# Ignore node_modules folders anywhere in the project hierarchy
+node_modules/
