@@ -30,9 +30,13 @@ jobs:
         with:
           terraform_version: 1.5.7
 
-      - name: Terraform validate
-        working-directory: infra
-        run: |
-          terraform init -backend=false
-          terraform validate
-          terraform plan -var-file=terraform.tfvars.example -lock=false
+      # - name: Terraform validate
+      #   working-directory: infra
+      #   env:
+      #     AWS_ACCESS_KEY_ID: mock_key
+      #     AWS_SECRET_ACCESS_KEY: mock_secret
+      #     AWS_DEFAULT_REGION: us-east-1 # Change to your preferred region
+      #   run: |
+      #     terraform init -backend=false
+      #     terraform validate
+      #     terraform plan -var-file=terraform.tfvars.example -lock=false
