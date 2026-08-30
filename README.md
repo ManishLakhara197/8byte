@@ -84,7 +84,7 @@ terraform apply -var-file="terraform.tfvars"
 
 Additional support docs can be found in:
 
-- [docs/implementation.md](docs/implementation.md)
+- [implementation.md](implementation.md)
 - [docs/backup-strategy.md](docs/backup-strategy.md)
 - [docs/security.md](docs/security.md)
 - [docs/cost-optimization.md](docs/cost-optimization.md)
