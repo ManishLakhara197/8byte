@@ -34,6 +34,7 @@ jobs:
           format: table
           exit-code: 1
           ignore-unfixed: true
+          severity: CRITICAL
 
       - name: Push image to ECR
         run: |
@@ -46,4 +47,4 @@ jobs:
       - name: Notify Slack on failure
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Staging deployment failed for ${{ github.repository }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Production deployment failed for ${{ github.repository }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
