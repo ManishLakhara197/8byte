@@ -8,7 +8,7 @@
 ## Recovery objectives
 
 - Recovery point objective (RPO): up to 24 hours depending on backup cadence and replication configuration.
-- Recovery time objective (RTO): targeted at under 1 hour for a single-db restore in a staging or low-volume environment.
+- Recovery time objective (RTO): targeted at under 1 hour for a single-db restore in a production or low-volume environment.
 
 ## Operational guidance
 

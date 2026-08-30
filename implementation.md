@@ -50,8 +50,7 @@ This repo is already aligned with the intended setup:
 - `infra/` contains Terraform modules for network, security, load balancer, database, and compute
 - `infra/backend.tf` uses a local backend by default; remote S3 backend is documented as the shared deployment option
 - `.github/workflows/pr-checks.yml` runs PR validation
-- `.github/workflows/build-and-deploy-staging.yml` builds and deploys staging
-- `.github/workflows/deploy-production.yml` contains the production deployment path with approval flow
+- `.github/workflows/build-and-deploy-production.yml` builds and deploys the application
 - `monitoring/alerts/cloudwatch-alerts.tf` and `monitoring/dashboards/*.json` provide alerting and dashboards
 - `.env.example` and `infra/terraform.tfvars.example` show the expected placeholder values
 
@@ -104,19 +103,13 @@ In GitHub:
 
 This matches the repo’s PR validation workflow in `.github/workflows/pr-checks.yml`.
 
-### Step 4.3: Create the GitHub Environments
+### Step 4.3: Create the GitHub Environment
 
 Go to `Settings` → `Environments` and create:
 
-- `staging`
 - `production`
 
-For production:
-
-- require manual approval before deployment
-- optionally restrict deployment to selected reviewers
-
-This supports the production deployment flow in `.github/workflows/deploy-production.yml`.
+This matches the current repository workflow model, which uses the single active deployment workflow in `.github/workflows/build-and-deploy-production.yml`.
 
 ---
 
@@ -146,7 +139,7 @@ ECR_REPOSITORY
 SLACK_WEBHOOK_URL
 ```
 
-Environment secrets for `staging` and `production`:
+Environment secrets for `production`:
 
 - Keep deployment-appropriate credentials there if you want environment-specific scoping
 - Add the same Slack webhook if you want environment-specific notification behavior
@@ -300,7 +293,7 @@ Edit `infra/terraform.tfvars` with your actual values:
 
 ```hcl
 region = "us-east-1"
-environment = "staging"
+environment = "production"
 project_name = "example"
 name_prefix = "eightbytes"
 availability_zones = ["us-east-1a", "us-east-1b"]
@@ -403,8 +396,7 @@ terraform init -reconfigure
 The repo already includes pipeline files:
 
 - `.github/workflows/pr-checks.yml`
-- `.github/workflows/build-and-deploy-staging.yml`
-- `.github/workflows/deploy-production.yml`
+- `.github/workflows/build-and-deploy-production.yml`
 
 ### PR checks
 
@@ -419,9 +411,9 @@ The PR workflow does the following:
 - runs `terraform validate`
 - runs `terraform plan`
 
-### Staging deployment
+### Production deployment
 
-The staging workflow:
+The production workflow:
 
 - checks out the code
 - configures AWS credentials
@@ -429,12 +421,12 @@ The staging workflow:
 - builds the Docker image from `app/`
 - scans the image with Trivy
 - pushes it to ECR
-- deploys the update to ECS staging
+- deploys the update to the production ECS service
 - notifies Slack on failure
 
-### Production deployment
+### Deployment model
 
-The production workflow is designed for manual deployment after approval with GitHub Environment protection.
+The repository is currently configured around the two active workflows: PR validation and the single build/deploy pipeline for production.
 
 ---
 
@@ -475,7 +467,7 @@ Recommended production approach:
 - Store DB credentials in AWS Secrets Manager
 - Inject them into ECS tasks via task definition variables or a secrets reference
 - Keep GitHub Actions secrets for CI/CD authentication
-- Use environment-specific secrets for staging and production if needed
+- Use environment-specific secrets for production if needed
 
 The current project is structured to allow that but still works with placeholders during local setup.
 
@@ -540,7 +532,7 @@ Before considering the environment ready, confirm all of the following:
 - ECR repository exists
 - GitHub repo is configured with Actions enabled
 - GitHub secrets are added
-- GitHub environments are created
+- GitHub environment is created
 - Slack webhook URL is valid
 - `infra/terraform.tfvars` points to correct account and region
 - Terraform apply completes successfully
@@ -604,7 +596,7 @@ If you want the simplest order to follow, use this sequence:
 1. Create the Slack incoming webhook
 2. Create the GitHub repo and enable Actions
 3. Add GitHub secrets
-4. Create GitHub environments for staging and production
+4. Create the GitHub environment for production
 5. Configure AWS CLI and IAM access
 6. Create the Terraform backend resources (S3 + DynamoDB)
 7. Create the ECR repo
@@ -613,9 +605,8 @@ If you want the simplest order to follow, use this sequence:
 10. Run `terraform init`, `validate`, `plan`, and `apply`
 11. Verify ECS, ALB, and RDS status
 12. Push a branch and confirm PR checks run
-13. Merge to `main` and verify staging deployment
-14. Approve the production workflow and confirm the deployment path
-15. Confirm CloudWatch alerts and Slack notifications are working
+13. Merge to `main` and verify the build/deploy workflow
+14. Confirm CloudWatch alerts and Slack notifications are working
 
 ---
 
