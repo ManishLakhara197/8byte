@@ -6,8 +6,8 @@ This project uses AWS as the target cloud and ECS Fargate for container hosting.
 
 ## Assumptions
 
-- The application is a containerized Node.js service listening on port 3000.
-- The repo includes or will include a single web application container image.
+- The application is a containerized Node.js 24 service listening on port 3000.
+- The repo includes or will include a single web application container image built on Node 24.
 - Terraform will be used for the core AWS infrastructure, while GitHub Actions handles CI/CD.
 - Remote state is bootstrapped manually before initial apply because Terraform cannot create the S3 backend and DynamoDB lock table itself in a fresh account.
 - The repository defaults to a local backend for immediate local validation in this workspace; the S3 backend remains available as a documented switch for shared AWS deployment.
