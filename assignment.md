@@ -39,8 +39,7 @@ Before writing code:
 │       └── loadbalancer/
 ├── .github/workflows/
 │   ├── pr-checks.yml
-│   ├── build-and-deploy-staging.yml
-│   └── deploy-production.yml
+│   └── build-and-deploy-staging.yml
 ├── monitoring/
 │   ├── dashboards/
 │   └── alerts/
@@ -76,9 +75,6 @@ validate`/`plan` on infra changes
       scan image (Trivy or `docker scout`) and dependencies (`npm audit`/`pip-audit`/
       `snyk`, whichever fits the app), push to ECR, deploy to staging (ECS service update
       or equivalent)
-- [ ] `deploy-production.yml`: same build artifact promoted (don't rebuild) with a
-      **required manual approval** (GitHub Environments protection rule) before deploying
-      to production
 - [ ] Failure notifications to Slack (webhook) and/or email on any job failure
 - [ ] Store all credentials as GitHub Actions secrets — never hardcode
 
