@@ -22,7 +22,7 @@ Before you start, make sure you have the following installed locally:
 - AWS CLI v2
 - Terraform 1.5+
 - Docker
-- Node.js 20+
+- Node.js 24+
 - A GitHub account with repository admin access
 - A Slack workspace with permission to create incoming webhooks
 
